@@ -1,5 +1,6 @@
 // Framework principal
 const express = require('express');
+const db = require('./config/database');
 
 // Permite peticiones desde otros dominios
 const cors = require('cors');
@@ -50,14 +51,30 @@ app.use('/api/paises', PaisesRoutes);
 
 app.use('/api/productos', productosRoutes);
 
+app.use('/api/transportadoras', TransportadorasRoutes);
 app.use('/api/Transportadoras', TransportadorasRoutes);
 
+app.use('/api/vehiculos', VehiculosRoutes);
 app.use('/api/Vehiculos', VehiculosRoutes);
 
 // Puerto del servidor
 const PORT = 3000;
 
-// Iniciar servidor
-app.listen(PORT, () => {
-    console.log(`Servidor ejecutándose en puerto ${PORT}`);
+const iniciarServidor = async () => {
+    await db.query(`
+        CREATE TABLE IF NOT EXISTS CategoriaProductos (
+            CatPro_id INT NOT NULL AUTO_INCREMENT,
+            nombre VARCHAR(150) NOT NULL,
+            PRIMARY KEY (CatPro_id)
+        )
+    `);
+
+    app.listen(PORT, () => {
+        console.log(`Servidor ejecutándose en puerto ${PORT}`);
+    });
+};
+
+iniciarServidor().catch((error) => {
+    console.error('No fue posible iniciar el servidor:', error.message);
+    process.exit(1);
 });

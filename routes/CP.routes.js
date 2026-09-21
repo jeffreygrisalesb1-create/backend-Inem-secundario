@@ -6,6 +6,7 @@ const controlador = require('../controllers/CP.controller');
 
 // GET /api/grupos
 router.get('/', controlador.obtenerCP);
+router.get('/:id', controlador.obtenerPorId);
 
 // crear
 router.post('/', controlador.crear);

@@ -4,9 +4,9 @@ const router = express.Router();
 
 const controlador = require('../controllers/CategoriaProductos.controller');
 
-//obtener todos no dio
+router.get('/', controlador.obtenerCategoriaProductos);
 
-router.get('/:id', controlador.actualizar)
+router.get('/:id', controlador.obtenerPorId);
 
 // Crear
 router.post('/', controlador.crear);
@@ -17,6 +17,4 @@ router.put('/:id', controlador.actualizar);
 // Eliminar
 router.delete('/:id', controlador.eliminar);
 
-// GET /api/grupos
-router.get('/', controlador.obtenerCategoriaProductos);
 module.exports = router;

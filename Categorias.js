@@ -1,4 +1,4 @@
-const API = "http://localhost:3000/api/Categorias";
+const API = "http://localhost:3000/api/categorias";
 
 const frm = document.getElementById("frmCategoria");
 
@@ -109,7 +109,7 @@ async function cargarCategorias() {
 
                         <button
                             class="btn-small blue"
-                            onclick="seleccionarCategoria(${JSON.stringify(Categoria).replace(/"/g, "&quot;")})">
+                            onclick="seleccionarCategorias(${JSON.stringify(Categoria).replace(/"/g, "&quot;")})">
 
                             Editar
 

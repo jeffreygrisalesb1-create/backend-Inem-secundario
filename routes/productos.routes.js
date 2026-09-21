@@ -6,6 +6,7 @@ const controlador = require('../controllers/productos.controller');
 
 // GET /api/grupos
 router.get('/', controlador.obtenerProductos);
+router.get('/:id', controlador.obtenerPorId);
 
 // crear
 router.post('/', controlador.crear);

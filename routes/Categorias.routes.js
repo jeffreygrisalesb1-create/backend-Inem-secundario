@@ -6,6 +6,7 @@ const controlador = require('../controllers/Categorias.controller');
 
 // GET /api/grupos
 router.get('/', controlador.obtenerCategorias);
+router.get('/:id', controlador.obtenerPorId);
 
 // Crear
 router.post('/', controlador.crear);

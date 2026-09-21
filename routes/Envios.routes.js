@@ -6,6 +6,7 @@ const controlador = require('../controllers/Envios.controller');
 
 // GET /api/grupos
 router.get('/', controlador.obtenerEnvios);
+router.get('/:id', controlador.obtenerPorId);
 
 // crear
 router.post('/', controlador.crear);
