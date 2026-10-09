@@ -1,6 +1,7 @@
 // Framework principal
 const express = require('express');
 const db = require('./config/database');
+const path = require('path');
 
 // Permite peticiones desde otros dominios
 const cors = require('cors');
@@ -12,6 +13,15 @@ app.use(express.json());
 
 // Middleware CORS
 app.use(cors());
+
+const raizFrontendPrincipal = path.resolve(__dirname, '../../paginaWebINEMVentas');
+const raizFormularios = path.resolve(__dirname, '../../Front-2.0/front-Inem-secundario/INEM-VENTAS/front/Proyecto-inem-ventas-fronted');
+
+app.use('/branding', express.static(path.join(raizFrontendPrincipal, 'assets', 'branding')));
+app.get('/formularios-gerente.html', (req, res) => {
+    res.sendFile(path.join(raizFrontendPrincipal, 'formularios-gerente.html'));
+});
+app.use('/formularios', express.static(raizFormularios));
 
 // Importar rutas
 const categoriaProductosRoutes = require('./routes/CategoriaProductos.routes');
@@ -68,6 +78,17 @@ const iniciarServidor = async () => {
             PRIMARY KEY (CatPro_id)
         )
     `);
+
+    const [columnasEnvios] = await db.query(`
+        SELECT COLUMN_NAME
+        FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA = DATABASE()
+          AND TABLE_NAME = 'Envios'
+          AND COLUMN_NAME = 'Descripcion'
+    `);
+    if (columnasEnvios.length === 0) {
+        await db.query('ALTER TABLE Envios ADD COLUMN Descripcion VARCHAR(255) NULL');
+    }
 
     app.listen(PORT, () => {
         console.log(`Servidor ejecutándose en puerto ${PORT}`);
